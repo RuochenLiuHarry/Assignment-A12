@@ -5,7 +5,15 @@ public class Menu extends JFrame {
 	
 	public Menu() {
 		setTitle("Battleship");
-		setSize(400,600);
-		setTitle("Battleship");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        
+        
 	}
+	
+    private void GameBoard() {
+
+    	
+    	
+    }
 }
