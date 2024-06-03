@@ -8,11 +8,9 @@ public class main {
 		
 		System.out.println("Testing moreesfsdfdsfsdfsdee");
 		
-<<<<<<< HEAD
 		System.out.println("Trying to push");
-=======
+
 		System.out.println("Testing moreeee");
->>>>>>> branch 'main' of https://github.com/RuochenLiuHarry/Assignment-A12.git
 	}
 
 }
