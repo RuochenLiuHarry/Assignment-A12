@@ -55,7 +55,7 @@ public class Menu extends JFrame {
         pack();
         setVisible(true);
         GameBoard(); // Testing gameboard
-        settingMenu();
+        settingMenu(); // Open setting Menu
         
 	}
 	
