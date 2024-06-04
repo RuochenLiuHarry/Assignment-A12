@@ -2,6 +2,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -32,8 +33,14 @@ public class Menu extends JFrame {
         
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.BLUE);
-        buttonPanel.setLayout(new GridLayout(4, 1, 0, 10)); // 4 rows, 1 col, 0 pixel Horizontal, 10 pixel Vertical
 
+        buttonPanel.setLayout(new GridLayout(4, 1, 0, 10)); // 4 rows, 1 col, 0 pixel Horizontal, 10 pixel Vertical
+        buttonPanel.setLayout(new GridLayout(4, 1, 0, 10));
+        
+        JLabel Text = new JLabel("Click button to start the game", JLabel.CENTER);
+        Text.setForeground(Color.WHITE);
+        Text.setFont(new Font("Arial", Font.BOLD, 30));
+        
         JButton pveButton = new JButton("PVE");
         JButton pvpButton = new JButton("PVP");
         JButton settingsButton = new JButton("settings");
@@ -43,12 +50,53 @@ public class Menu extends JFrame {
         buttonPanel.add(pvpButton);
         buttonPanel.add(settingsButton);
         buttonPanel.add(quitButton);
-
-        add(buttonPanel, BorderLayout.CENTER);
+        
+        add(Text, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
         pack();
         setVisible(true);
         GameBoard(); // Testing gameboard
+        settingMenu();
         
+	}
+	
+	private void settingMenu() {
+		JFrame gameSet = new JFrame("game settings");
+        gameSet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameSet.getContentPane().setBackground(Color.blue);
+        
+        gameSet.setLayout(new BorderLayout());
+        
+        ImageIcon logoIcon = new ImageIcon("logo.png");
+        JLabel logoLabel = new JLabel(logoIcon);
+        gameSet.add(logoLabel, BorderLayout.NORTH);
+        
+        JLabel Text = new JLabel("Click button to start the game", JLabel.CENTER);
+        Text.setForeground(Color.WHITE);
+        Text.setFont(new Font("Arial", Font.BOLD, 30));
+        
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.BLUE);
+        buttonPanel.setLayout(new GridLayout(4, 1, 0, 10));
+        
+        
+        JButton langButton = new JButton("Language");
+        JButton soundButton = new JButton("sound");
+        JButton quitButton = new JButton("quit");
+
+        
+        buttonPanel.add(langButton);
+        buttonPanel.add(soundButton);
+        buttonPanel.add(quitButton);
+
+        
+        gameSet.add(Text, BorderLayout.CENTER);
+        gameSet.add(buttonPanel, BorderLayout.SOUTH);
+        gameSet.pack();
+        gameSet.setVisible(true);
+		
+		
+		
 	}
 	
     private void GameBoard() {
