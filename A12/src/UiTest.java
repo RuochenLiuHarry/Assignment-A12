@@ -3,7 +3,8 @@ public class UiTest {
 
 	public static void main(String[] args) {
 
-		new MenuSystem();
+		 Menu menu = new Menu();
+	     menu.menu();
 		
 	}
 

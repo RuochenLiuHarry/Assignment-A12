@@ -13,12 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-public class MenuSystem extends JFrame {
+public class Menu extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private JButton[][] gridButtons;
 
 	public void menu() {
