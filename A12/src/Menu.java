@@ -112,7 +112,7 @@ public class Menu extends JFrame {
 
 		// Left panel for (Your fleet) and (Score board)
 		JPanel leftPanel = new JPanel(new GridLayout(2, 1)); // 2 rows, 1 col
-		leftPanel.setPreferredSize(new Dimension(150, 0)); // Width left panel
+		leftPanel.setPreferredSize(new Dimension(150, 0)); // Width left panel 150 pixels
 		leftPanel.setBackground(new Color(0, 51, 102));	// Dark blue
 
 		// (Your fleet) panel
@@ -140,7 +140,7 @@ public class Menu extends JFrame {
 
 		// Right panel for (Enemy fleet) and (Chat)
 		JPanel rightPanel = new JPanel(new GridLayout(2, 1)); // 2 rows, 1 col
-		rightPanel.setPreferredSize(new Dimension(150, 0)); // Width right panel
+		rightPanel.setPreferredSize(new Dimension(150, 0)); // Width right panel, 150 pixels
 		rightPanel.setBackground(new Color(0, 51, 102));	// Dark blue
 
 		// (Enemy fleet) panel
@@ -233,6 +233,7 @@ public class Menu extends JFrame {
 		ImageIcon hit = new ImageIcon("hit.png");
 		ImageIcon miss = new ImageIcon("miss.png");
 		gridButtons[7][7].setIcon(hit); // Hit three-segment ship horiz
+		gridButtons[2][2].setIcon(hit); // Hit three-segment ship vert
 		gridButtons[8][2].setIcon(miss);
 		gridButtons[4][8].setIcon(miss);
 		gridButtons[3][5].setIcon(miss);
