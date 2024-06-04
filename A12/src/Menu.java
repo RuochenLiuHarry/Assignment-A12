@@ -20,7 +20,7 @@ public class Menu extends JFrame {
 	public void menu() {
 		setTitle("Battleship");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setBackground(Color.blue);
+		getContentPane().setBackground(new Color(51, 204, 255));
 
 		setLayout(new BorderLayout());
 
@@ -29,7 +29,7 @@ public class Menu extends JFrame {
 		add(logoLabel, BorderLayout.NORTH);
 
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.BLUE);
+		buttonPanel.setBackground(new Color(51, 204, 255));
 		buttonPanel.setLayout(new GridLayout(4, 1, 0, 10));
 
 		JLabel Text = new JLabel("Click button to start the game", JLabel.CENTER);
@@ -53,13 +53,14 @@ public class Menu extends JFrame {
 		setVisible(true);
 		GameBoard(); // Testing gameboard
 		settingMenu(); // Open setting Menu
-
+		victory();
+		fail();
 	}
 
 	private void settingMenu() {
 		JFrame gameSet = new JFrame("game settings");
 		gameSet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gameSet.getContentPane().setBackground(Color.blue);
+		gameSet.getContentPane().setBackground(new Color(51, 204, 255));
 
 		gameSet.setLayout(new BorderLayout());
 
@@ -67,12 +68,12 @@ public class Menu extends JFrame {
 		JLabel logoLabel = new JLabel(logoIcon);
 		gameSet.add(logoLabel, BorderLayout.NORTH);
 
-		JLabel Text = new JLabel("Click button to start the game", JLabel.CENTER);
-		Text.setForeground(Color.WHITE);
+		JLabel Text = new JLabel("Click button to change the settings", JLabel.CENTER);
+		Text.setForeground(Color.white);
 		Text.setFont(new Font("Arial", Font.BOLD, 30));
 
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.BLUE);
+		buttonPanel.setBackground(new Color(51, 204, 255));
 		buttonPanel.setLayout(new GridLayout(4, 1, 0, 10));
 
 
@@ -90,6 +91,43 @@ public class Menu extends JFrame {
 		gameSet.add(buttonPanel, BorderLayout.SOUTH);
 		gameSet.pack();
 		gameSet.setVisible(true);
+	}
+	
+	
+	private void victory() {
+		JFrame win = new JFrame("You won");
+		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		win.getContentPane().setBackground(new Color(51, 204, 255));
+		JLabel Text = new JLabel("You Won!", JLabel.CENTER);
+		JLabel Text1 = new JLabel("(click to continue )", JLabel.CENTER);
+		Text.setForeground(Color.WHITE);
+		Text.setFont(new Font("Arial", Font.BOLD, 40));
+		Text1.setForeground(Color.WHITE);
+		Text1.setFont(new Font("Arial", Font.BOLD, 40));
+		
+		win.add(Text, BorderLayout.NORTH);
+		win.add(Text1, BorderLayout.SOUTH);
+		win.pack();
+		win.setVisible(true);
+		
+	}
+	
+	private void fail() {
+		JFrame lose = new JFrame("You lose");
+		lose.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		lose.getContentPane().setBackground(new Color(51, 204, 255));
+		JLabel Text = new JLabel("You lose", JLabel.CENTER);
+		JLabel Text1 = new JLabel("(click to continue )", JLabel.CENTER);
+		Text.setForeground(Color.WHITE);
+		Text.setFont(new Font("Arial", Font.BOLD, 40));
+		Text1.setForeground(Color.WHITE);
+		Text1.setFont(new Font("Arial", Font.BOLD, 40));
+		
+		lose.add(Text, BorderLayout.NORTH);
+		lose.add(Text1, BorderLayout.SOUTH);
+		lose.pack();
+		lose.setVisible(true);
+		
 	}
 
 	private void GameBoard() {
