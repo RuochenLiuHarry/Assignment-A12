@@ -119,7 +119,7 @@ public class Menu extends JFrame {
 		JPanel yourFleetPanel = new JPanel();
 		yourFleetPanel.setBackground(new Color(0, 51, 102)); // Dark blue
 		yourFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel yourFleetLabel = new JLabel("Your fleet", SwingConstants.CENTER);
+		JLabel yourFleetLabel = new JLabel("Your fleet");
 		yourFleetLabel.setForeground(Color.WHITE);
 		yourFleetPanel.add(yourFleetLabel);
 
@@ -127,7 +127,7 @@ public class Menu extends JFrame {
 		JPanel scoreBoardPanel = new JPanel();
 		scoreBoardPanel.setBackground(new Color(0, 51, 102)); // Dark blue
 		scoreBoardPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel scoreBoardLabel = new JLabel("Score board", SwingConstants.CENTER);
+		JLabel scoreBoardLabel = new JLabel("Score board");
 		scoreBoardLabel.setForeground(Color.WHITE);
 		scoreBoardPanel.add(scoreBoardLabel);
 
@@ -147,7 +147,7 @@ public class Menu extends JFrame {
 		JPanel enemyFleetPanel = new JPanel();
 		enemyFleetPanel.setBackground(new Color(0, 51, 102)); // Dark blue
 		enemyFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel enemyFleetLabel = new JLabel("Enemy fleet", SwingConstants.CENTER);
+		JLabel enemyFleetLabel = new JLabel("Enemy fleet");
 		enemyFleetLabel.setForeground(Color.WHITE);
 		enemyFleetPanel.add(enemyFleetLabel);
 
@@ -155,7 +155,7 @@ public class Menu extends JFrame {
 		JPanel chatPanel = new JPanel();
 		chatPanel.setBackground(new Color(0, 51, 102)); // Dark blue
 		chatPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel chatLabel = new JLabel("Chat", SwingConstants.CENTER);
+		JLabel chatLabel = new JLabel("Chat");
 		chatLabel.setForeground(Color.WHITE);
 		chatPanel.add(chatLabel);
 
@@ -189,7 +189,7 @@ public class Menu extends JFrame {
 
 		// Column labels
 		for (int col = 0; col < 10; col++) {
-			JLabel label = new JLabel(String.valueOf((char) ('A' + col)), SwingConstants.CENTER);
+			JLabel label = new JLabel(String.valueOf((char) ('A' + col)));
 			label.setForeground(Color.WHITE); // Text color white
 			gridPanel.add(label);
 		}
@@ -197,7 +197,7 @@ public class Menu extends JFrame {
 		gridButtons = new JButton[10][10];
 		for (int row = 0; row < 10; row++) {
 			// Row label
-			JLabel label = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER);
+			JLabel label = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER); // Centers the row numbers
 			label.setForeground(Color.BLACK); // Text color black
 			gridPanel.add(label);
 
