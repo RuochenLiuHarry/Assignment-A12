@@ -13,11 +13,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-public class Menu extends JFrame {
+public class MenuSystem extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton[][] gridButtons;
 
-	public Menu() {
+	public void menu() {
 		setTitle("Battleship");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setBackground(Color.blue);
@@ -90,9 +94,6 @@ public class Menu extends JFrame {
 		gameSet.add(buttonPanel, BorderLayout.SOUTH);
 		gameSet.pack();
 		gameSet.setVisible(true);
-
-
-
 	}
 
 	private void GameBoard() {

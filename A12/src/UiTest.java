@@ -1,9 +1,9 @@
 
-public class main {
+public class UiTest {
 
 	public static void main(String[] args) {
 
-		new Menu();
+		new MenuSystem();
 		
 	}
 
