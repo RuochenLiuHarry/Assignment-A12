@@ -9,9 +9,6 @@ CLS
 
 :: LOCAL VARIABLES ....................................................
 
-:: Some of the below variables will need to be changed.
-:: Remember to always use RELATIVE paths.
-
 :: If your code needs no external libraries, remove all references to LIBDIR
 :: in this script.
 
@@ -23,10 +20,9 @@ SET JARNAME=JAPLabsSwing.jar
 SET JAROUT=labs-jar.out
 SET JARERR=labs-jar.err
 SET DOCDIR=doc
-SET DOCPACK=CST8221
 SET DOCERR=labs-javadoc.err
-SET MAINCLASSSRC=%SRCDIR%\CST8221\UiTest.java
-SET MAINCLASSBIN=CST8221.UiTest
+SET MAINCLASSSRC=%SRCDIR%\UiTest.java
+SET MAINCLASSBIN=UiTest
 
 @echo off
 
@@ -64,11 +60,11 @@ jar cvfe %JARNAME% %MAINCLASSBIN% . > ../%JAROUT% 2> ../%JARERR%
 
 ECHO "3. Creating Javadoc ..............."
 cd ..
-javadoc -cp ".;%BINDIR%;../%LIBDIR%/*" --module-path "%LIBDIR%" -d %DOCDIR% -sourcepath %SRCDIR% -subpackages %DOCPACK% 2> %DOCERR%
+javadoc -cp ".;%BINDIR%;%LIBDIR%/*" -d %DOCDIR% -sourcepath %SRCDIR% -subpackages . 2> %DOCERR%
 
 cd bin
 ECHO "4. Running Jar ...................."
-start java --module-path "../%LIBDIR%" -jar %JARNAME%
+start java -jar %JARNAME%
 cd ..
 
 ECHO "[END OF SCRIPT -------------------]"
