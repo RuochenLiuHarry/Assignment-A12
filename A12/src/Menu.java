@@ -1,13 +1,13 @@
 
-import java.awt.Dimension;
-
-
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,11 +21,33 @@ public class Menu extends JFrame {
 	
 	public Menu() {
 		setTitle("Battleship");
-		setSize(new Dimension(1920, 1080));
-		setMinimumSize(new Dimension(1920, 1080));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.blue);
+        
+        setLayout(new BorderLayout());
+        
+        ImageIcon logoIcon = new ImageIcon("logo.png");
+        JLabel logoLabel = new JLabel(logoIcon);
+        add(logoLabel, BorderLayout.NORTH);
+        
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.BLUE);
+        buttonPanel.setLayout(new GridLayout(4, 1, 0, 10));
 
-        GameBoard(); // Testing gameboard
+        JButton pveButton = new JButton("PVE");
+        JButton pvpButton = new JButton("PVP");
+        JButton settingsButton = new JButton("settings");
+        JButton quitButton = new JButton("quit");
+
+        buttonPanel.add(pveButton);
+        buttonPanel.add(pvpButton);
+        buttonPanel.add(settingsButton);
+        buttonPanel.add(quitButton);
+
+        add(buttonPanel, BorderLayout.CENTER);
+        pack();
+        setVisible(true);
+ //       GameBoard(); // Testing gameboard
         
 	}
 	
