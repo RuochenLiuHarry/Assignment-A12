@@ -13,11 +13,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-public class Menu extends JFrame {
+public class MenuSystem extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton[][] gridButtons;
 
-	public Menu() {
+	public void menu() {
 		setTitle("Battleship");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setBackground(Color.blue);
@@ -90,9 +94,6 @@ public class Menu extends JFrame {
 		gameSet.add(buttonPanel, BorderLayout.SOUTH);
 		gameSet.pack();
 		gameSet.setVisible(true);
-
-
-
 	}
 
 	private void GameBoard() {
@@ -119,7 +120,7 @@ public class Menu extends JFrame {
 		JPanel yourFleetPanel = new JPanel();
 		yourFleetPanel.setBackground(new Color(0, 51, 102)); // Dark blue
 		yourFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel yourFleetLabel = new JLabel("Your fleet");
+		JLabel yourFleetLabel = new JLabel("Your fleet", SwingConstants.CENTER);
 		yourFleetLabel.setForeground(Color.WHITE);
 		yourFleetPanel.add(yourFleetLabel);
 
@@ -127,7 +128,7 @@ public class Menu extends JFrame {
 		JPanel scoreBoardPanel = new JPanel();
 		scoreBoardPanel.setBackground(new Color(0, 51, 102)); // Dark blue
 		scoreBoardPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel scoreBoardLabel = new JLabel("Score board");
+		JLabel scoreBoardLabel = new JLabel("Score board", SwingConstants.CENTER);
 		scoreBoardLabel.setForeground(Color.WHITE);
 		scoreBoardPanel.add(scoreBoardLabel);
 
@@ -147,7 +148,7 @@ public class Menu extends JFrame {
 		JPanel enemyFleetPanel = new JPanel();
 		enemyFleetPanel.setBackground(new Color(0, 51, 102)); // Dark blue
 		enemyFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel enemyFleetLabel = new JLabel("Enemy fleet");
+		JLabel enemyFleetLabel = new JLabel("Enemy fleet", SwingConstants.CENTER);
 		enemyFleetLabel.setForeground(Color.WHITE);
 		enemyFleetPanel.add(enemyFleetLabel);
 
@@ -155,7 +156,7 @@ public class Menu extends JFrame {
 		JPanel chatPanel = new JPanel();
 		chatPanel.setBackground(new Color(0, 51, 102)); // Dark blue
 		chatPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel chatLabel = new JLabel("Chat");
+		JLabel chatLabel = new JLabel("Chat", SwingConstants.CENTER);
 		chatLabel.setForeground(Color.WHITE);
 		chatPanel.add(chatLabel);
 
@@ -189,7 +190,7 @@ public class Menu extends JFrame {
 
 		// Column labels
 		for (int col = 0; col < 10; col++) {
-			JLabel label = new JLabel(String.valueOf((char) ('A' + col)));
+			JLabel label = new JLabel(String.valueOf((char) ('A' + col)), SwingConstants.CENTER);
 			label.setForeground(Color.WHITE); // Text color white
 			gridPanel.add(label);
 		}
@@ -197,7 +198,7 @@ public class Menu extends JFrame {
 		gridButtons = new JButton[10][10];
 		for (int row = 0; row < 10; row++) {
 			// Row label
-			JLabel label = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER); // Centers the row numbers
+			JLabel label = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER);
 			label.setForeground(Color.BLACK); // Text color black
 			gridPanel.add(label);
 
