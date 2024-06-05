@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,10 +12,25 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+/**
+ * The Menu class represents the main menu for the Battleship game.
+ * It includes the main menu, settings menu, game board, victory screen, and failure screen.
+ */
 public class Menu extends JFrame {
 
+	 /**
+     * Default serial version UID for serialization.
+     */
+	private static final long serialVersionUID = 1L; // Add serialVersionUID for serialization
+
+	/**
+	 * The 2D array of buttons representing the game grid.
+	 */
 	private JButton[][] gridButtons;
 
+	/**
+	 * Initializes and displays the main menu.
+	 */
 	public void menu() {
 		setTitle("Battleship");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +50,6 @@ public class Menu extends JFrame {
 		Text.setForeground(Color.WHITE);
 		Text.setFont(new Font("Arial", Font.BOLD, 30));
 
-
 		JButton pveButton = new JButton("PVE");
 		JButton pvpButton = new JButton("PVP");
 		JButton settingsButton = new JButton("settings");
@@ -53,10 +66,13 @@ public class Menu extends JFrame {
 		setVisible(true);
 		GameBoard(); // Testing gameboard
 		settingMenu(); // Open setting Menu
-		victory();
-		fail();
+		victory(); // Testing victory screen
+		fail(); // Testing failure screen
 	}
 
+	/**
+	 * Initializes and displays the settings menu.
+	 */
 	private void settingMenu() {
 		JFrame gameSet = new JFrame("game settings");
 		gameSet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,24 +92,23 @@ public class Menu extends JFrame {
 		buttonPanel.setBackground(new Color(51, 204, 255));
 		buttonPanel.setLayout(new GridLayout(4, 1, 0, 10));
 
-
 		JButton langButton = new JButton("Language");
 		JButton soundButton = new JButton("sound");
 		JButton quitButton = new JButton("quit");
 
-
 		buttonPanel.add(langButton);
 		buttonPanel.add(soundButton);
 		buttonPanel.add(quitButton);
-
 
 		gameSet.add(Text, BorderLayout.CENTER);
 		gameSet.add(buttonPanel, BorderLayout.SOUTH);
 		gameSet.pack();
 		gameSet.setVisible(true);
 	}
-	
-	
+
+	/**
+	 * Initializes and displays the victory screen.
+	 */
 	private void victory() {
 		JFrame win = new JFrame("You won");
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,14 +119,16 @@ public class Menu extends JFrame {
 		Text.setFont(new Font("Arial", Font.BOLD, 40));
 		Text1.setForeground(Color.WHITE);
 		Text1.setFont(new Font("Arial", Font.BOLD, 40));
-		
+
 		win.add(Text, BorderLayout.NORTH);
 		win.add(Text1, BorderLayout.SOUTH);
 		win.pack();
 		win.setVisible(true);
-		
 	}
-	
+
+	/**
+	 * Initializes and displays the failure screen.
+	 */
 	private void fail() {
 		JFrame lose = new JFrame("You lose");
 		lose.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -122,14 +139,16 @@ public class Menu extends JFrame {
 		Text.setFont(new Font("Arial", Font.BOLD, 40));
 		Text1.setForeground(Color.WHITE);
 		Text1.setFont(new Font("Arial", Font.BOLD, 40));
-		
+
 		lose.add(Text, BorderLayout.NORTH);
 		lose.add(Text1, BorderLayout.SOUTH);
 		lose.pack();
 		lose.setVisible(true);
-		
 	}
 
+	/**
+	 * Initializes and displays the game board.
+	 */
 	private void GameBoard() {
 		JFrame gameBoardFrame = new JFrame("Game Board");
 		gameBoardFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,7 +162,6 @@ public class Menu extends JFrame {
 		ImageIcon titleImage = new ImageIcon("logo.png"); 
 		JLabel titleLabel = new JLabel(titleImage);
 		mainPanel.add(titleLabel, BorderLayout.NORTH);
-
 
 		// Left panel for (Your fleet) and (Score board)
 		JPanel leftPanel = new JPanel(new GridLayout(2, 1)); // 2 rows, 1 col
@@ -171,8 +189,6 @@ public class Menu extends JFrame {
 		leftPanel.add(scoreBoardPanel, BorderLayout.CENTER);
 		mainPanel.add(leftPanel, BorderLayout.WEST);
 
-
-
 		// Right panel for (Enemy fleet) and (Chat)
 		JPanel rightPanel = new JPanel(new GridLayout(2, 1)); // 2 rows, 1 col
 		rightPanel.setPreferredSize(new Dimension(150, 0)); // Width right panel, 150 pixels
@@ -199,8 +215,6 @@ public class Menu extends JFrame {
 		rightPanel.add(chatPanel, BorderLayout.CENTER);
 		mainPanel.add(rightPanel, BorderLayout.EAST);
 
-
-
 		// Bottom panel for the buttons
 		JPanel bottomPanel = new JPanel(new GridLayout(1, 4, 10, 0)); // 1 row, 4 col, 10 horizontal pixel, 0 vertical pixel
 		bottomPanel.setBackground(new Color(0, 51, 102)); // Dark blue
@@ -213,7 +227,6 @@ public class Menu extends JFrame {
 		bottomPanel.add(swapButton);
 		bottomPanel.add(quitButton);
 		mainPanel.add(bottomPanel, BorderLayout.SOUTH);
-
 
 		// Center panel for the game board grid
 		JPanel gridPanel = new JPanel(new GridLayout(11, 11, 2, 2)); 
@@ -247,7 +260,6 @@ public class Menu extends JFrame {
 			}
 		}
 
-
 		// Three-segment ship vertically
 		ImageIcon NvertShipBow = new ImageIcon("bow_north.png");
 		ImageIcon vertMidHull = new ImageIcon("midhull_vert.png");
@@ -255,7 +267,7 @@ public class Menu extends JFrame {
 		gridButtons[2][2].setIcon(NvertShipBow);
 		gridButtons[3][2].setIcon(vertMidHull);
 		gridButtons[4][2].setIcon(SvertShipBow);
-		
+
 		// Three-segment ship horizontally
 		ImageIcon EhorizShipBow = new ImageIcon("bow_east.png");
 		ImageIcon horizMidHull = new ImageIcon("midhull_horiz.png");
@@ -263,7 +275,7 @@ public class Menu extends JFrame {
 		gridButtons[7][7].setIcon(EhorizShipBow);
 		gridButtons[7][6].setIcon(horizMidHull);
 		gridButtons[7][5].setIcon(WvertShipBow);
-		
+
 		// Hit and Miss
 		ImageIcon hit = new ImageIcon("hit.png");
 		ImageIcon miss = new ImageIcon("miss.png");
@@ -272,7 +284,6 @@ public class Menu extends JFrame {
 		gridButtons[8][2].setIcon(miss);
 		gridButtons[4][8].setIcon(miss);
 		gridButtons[3][5].setIcon(miss);
-
 
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
 		gameBoardFrame.add(mainPanel);
