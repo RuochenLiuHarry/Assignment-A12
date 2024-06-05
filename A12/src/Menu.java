@@ -171,22 +171,22 @@ public class Menu extends JFrame {
 		// (Your fleet) panel
 		JPanel yourFleetPanel = new JPanel();
 		yourFleetPanel.setBackground(new Color(0, 51, 102)); // Dark blue
-		yourFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel yourFleetLabel = new JLabel("Your fleet", SwingConstants.CENTER);
+		yourFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Border, 2 thickness 
+		JLabel yourFleetLabel = new JLabel("Your fleet");
 		yourFleetLabel.setForeground(Color.WHITE);
 		yourFleetPanel.add(yourFleetLabel);
 
 		// (Scoreboard) panel
 		JPanel scoreBoardPanel = new JPanel();
 		scoreBoardPanel.setBackground(new Color(0, 51, 102)); // Dark blue
-		scoreBoardPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel scoreBoardLabel = new JLabel("Score board", SwingConstants.CENTER);
+		scoreBoardPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Border, 2 thickness 
+		JLabel scoreBoardLabel = new JLabel("Score board");
 		scoreBoardLabel.setForeground(Color.WHITE);
 		scoreBoardPanel.add(scoreBoardLabel);
 
 		// Adding components to panels
-		leftPanel.add(yourFleetPanel, BorderLayout.NORTH);
-		leftPanel.add(scoreBoardPanel, BorderLayout.CENTER);
+		leftPanel.add(yourFleetPanel);
+		leftPanel.add(scoreBoardPanel);
 		mainPanel.add(leftPanel, BorderLayout.WEST);
 
 		// Right panel for (Enemy fleet) and (Chat)
@@ -197,22 +197,22 @@ public class Menu extends JFrame {
 		// (Enemy fleet) panel
 		JPanel enemyFleetPanel = new JPanel();
 		enemyFleetPanel.setBackground(new Color(0, 51, 102)); // Dark blue
-		enemyFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel enemyFleetLabel = new JLabel("Enemy fleet", SwingConstants.CENTER);
+		enemyFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Border, 2 thickness 
+		JLabel enemyFleetLabel = new JLabel("Enemy fleet");
 		enemyFleetLabel.setForeground(Color.WHITE);
 		enemyFleetPanel.add(enemyFleetLabel);
 
 		// (Chat) panel
 		JPanel chatPanel = new JPanel();
 		chatPanel.setBackground(new Color(0, 51, 102)); // Dark blue
-		chatPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Add border
-		JLabel chatLabel = new JLabel("Chat", SwingConstants.CENTER);
+		chatPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Border, 2 thickness 
+		JLabel chatLabel = new JLabel("Chat");
 		chatLabel.setForeground(Color.WHITE);
 		chatPanel.add(chatLabel);
 
 		// Adding components to panels
-		rightPanel.add(enemyFleetPanel, BorderLayout.NORTH);
-		rightPanel.add(chatPanel, BorderLayout.CENTER);
+		rightPanel.add(enemyFleetPanel);
+		rightPanel.add(chatPanel);
 		mainPanel.add(rightPanel, BorderLayout.EAST);
 
 		// Bottom panel for the buttons
@@ -243,8 +243,8 @@ public class Menu extends JFrame {
 		}
 
 		gridButtons = new JButton[10][10];
+		// Row label
 		for (int row = 0; row < 10; row++) {
-			// Row label
 			JLabel label = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER);
 			label.setForeground(Color.BLACK); // Text color black
 			gridPanel.add(label);
@@ -252,7 +252,6 @@ public class Menu extends JFrame {
 			for (int col = 0; col < 10; col++) {
 				JButton button = new JButton();
 				button.setPreferredSize(new Dimension(40, 40)); // Size of button
-				button.setEnabled(false); // Disable the button
 				button.setBackground(new Color(51, 204, 255)); // Light blue
 				button.setBorder(new LineBorder(Color.WHITE)); // White border
 				gridButtons[row][col] = button;
