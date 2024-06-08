@@ -18,11 +18,6 @@ import javax.swing.border.LineBorder;
  */
 public class Menu extends JFrame {
 
-	 /**
-     * Default serial version UID for serialization.
-     */
-	private static final long serialVersionUID = 1L; // Add serialVersionUID for serialization
-
 	/**
 	 * The 2D array of buttons representing the game grid.
 	 */
@@ -90,7 +85,7 @@ public class Menu extends JFrame {
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(new Color(51, 204, 255));
-		buttonPanel.setLayout(new GridLayout(4, 1, 0, 10));
+		buttonPanel.setLayout(new GridLayout(3, 1, 0, 10));
 
 		JButton langButton = new JButton("Language");
 		JButton soundButton = new JButton("sound");
@@ -153,7 +148,6 @@ public class Menu extends JFrame {
 		JFrame gameBoardFrame = new JFrame("Game Board");
 		gameBoardFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameBoardFrame.setLocationRelativeTo(null);
-		gameBoardFrame.setResizable(false);
 
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBackground(new Color(51, 204, 255)); // Light blue
@@ -163,18 +157,10 @@ public class Menu extends JFrame {
 		JLabel titleLabel = new JLabel(titleImage);
 		mainPanel.add(titleLabel, BorderLayout.NORTH);
 
-		// Left panel for (Your fleet) and (Score board)
-		JPanel leftPanel = new JPanel(new GridLayout(2, 1)); // 2 rows, 1 col
-		leftPanel.setPreferredSize(new Dimension(150, 0)); // Width left panel 150 pixels
-		leftPanel.setBackground(new Color(0, 51, 102));	// Dark blue
+		// Left panel for (Score board)
+		JPanel leftPanel = new JPanel(new GridLayout(1, 1)); // 2 rows, 1 col
+		leftPanel.setPreferredSize(new Dimension(200, 0)); // Width left panel 200 pixels, 0 height
 
-		// (Your fleet) panel
-		JPanel yourFleetPanel = new JPanel();
-		yourFleetPanel.setBackground(new Color(0, 51, 102)); // Dark blue
-		yourFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Border, 2 thickness 
-		JLabel yourFleetLabel = new JLabel("Your fleet");
-		yourFleetLabel.setForeground(Color.WHITE);
-		yourFleetPanel.add(yourFleetLabel);
 
 		// (Scoreboard) panel
 		JPanel scoreBoardPanel = new JPanel();
@@ -185,22 +171,12 @@ public class Menu extends JFrame {
 		scoreBoardPanel.add(scoreBoardLabel);
 
 		// Adding components to panels
-		leftPanel.add(yourFleetPanel);
 		leftPanel.add(scoreBoardPanel);
 		mainPanel.add(leftPanel, BorderLayout.WEST);
 
-		// Right panel for (Enemy fleet) and (Chat)
-		JPanel rightPanel = new JPanel(new GridLayout(2, 1)); // 2 rows, 1 col
-		rightPanel.setPreferredSize(new Dimension(150, 0)); // Width right panel, 150 pixels
-		rightPanel.setBackground(new Color(0, 51, 102));	// Dark blue
-
-		// (Enemy fleet) panel
-		JPanel enemyFleetPanel = new JPanel();
-		enemyFleetPanel.setBackground(new Color(0, 51, 102)); // Dark blue
-		enemyFleetPanel.setBorder(new LineBorder(Color.WHITE, 2)); // Border, 2 thickness 
-		JLabel enemyFleetLabel = new JLabel("Enemy fleet");
-		enemyFleetLabel.setForeground(Color.WHITE);
-		enemyFleetPanel.add(enemyFleetLabel);
+		// Right panel for (Chat)
+		JPanel rightPanel = new JPanel(new GridLayout(1, 1)); // 2 rows, 1 col
+		rightPanel.setPreferredSize(new Dimension(200, 0)); // Width right panel, 200 pixels
 
 		// (Chat) panel
 		JPanel chatPanel = new JPanel();
@@ -211,7 +187,6 @@ public class Menu extends JFrame {
 		chatPanel.add(chatLabel);
 
 		// Adding components to panels
-		rightPanel.add(enemyFleetPanel);
 		rightPanel.add(chatPanel);
 		mainPanel.add(rightPanel, BorderLayout.EAST);
 
@@ -236,8 +211,10 @@ public class Menu extends JFrame {
 		gridPanel.add(new JLabel(""));
 
 		// Column labels
+		String[] colLabel = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 		for (int col = 0; col < 10; col++) {
-			JLabel label = new JLabel(String.valueOf((char) ('A' + col)), SwingConstants.CENTER);
+			JLabel label = new JLabel(colLabel[col]);
+			label.setHorizontalAlignment(JLabel.CENTER);
 			label.setForeground(Color.WHITE); // Text color white
 			gridPanel.add(label);
 		}
@@ -245,10 +222,12 @@ public class Menu extends JFrame {
 		gridButtons = new JButton[10][10];
 		// Row label
 		for (int row = 0; row < 10; row++) {
-			JLabel label = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER);
+			JLabel label = new JLabel(String.valueOf(row + 1));
+			label.setHorizontalAlignment(JLabel.CENTER);
 			label.setForeground(Color.BLACK); // Text color black
 			gridPanel.add(label);
-
+			
+			// Grid
 			for (int col = 0; col < 10; col++) {
 				JButton button = new JButton();
 				button.setPreferredSize(new Dimension(40, 40)); // Size of button
