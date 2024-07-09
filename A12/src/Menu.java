@@ -1,10 +1,7 @@
-import java.awt.*;
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-
 public class Menu extends JFrame {
 
     private JFrame frame;
+    private JFrame mainMenu;
     private JButton pveButton;
     private JButton pvpButton;
     private JButton settingsButton;
@@ -18,20 +15,19 @@ public class Menu extends JFrame {
     private String message;
     private Game game;
 
-    public Menu() {
-        menu();
-    }
+
 
     public void menu() {
-        setTitle("Battleship");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(new Color(51, 204, 255));
+    	mainMenu = new JFrame();
+        mainMenu.setTitle("Battleship");
+        mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainMenu. getContentPane().setBackground(new Color(51, 204, 255));
 
-        setLayout(new BorderLayout());
+        mainMenu.setLayout(new BorderLayout());
 
         ImageIcon logoIcon = new ImageIcon("logo.png");
         JLabel logoLabel = new JLabel(logoIcon);
-        add(logoLabel, BorderLayout.NORTH);
+        mainMenu.add(logoLabel, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(51, 204, 255));
@@ -46,6 +42,7 @@ public class Menu extends JFrame {
 
         pvpButton = new JButton("PVP");
         settingsButton = new JButton("Settings");
+        settingsButton.addActionListener(e -> settingMenu());
         quitButton = new JButton("Quit");
 
         buttonPanel.add(pveButton);
@@ -53,13 +50,14 @@ public class Menu extends JFrame {
         buttonPanel.add(settingsButton);
         buttonPanel.add(quitButton);
 
-        add(text, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
-        pack();
-        setVisible(true);
+        mainMenu.add(text, BorderLayout.CENTER);
+        mainMenu.add(buttonPanel, BorderLayout.SOUTH);
+        mainMenu.pack();
+        mainMenu.setVisible(true);
     }
 
     private void startPVE() {
+    	mainMenu.setVisible(false);
         if (game != null) {
             game.getGameBoard().dispose();
         }
@@ -75,6 +73,7 @@ public class Menu extends JFrame {
     }
 
     public void settingMenu() {
+    	mainMenu.setVisible(false);
         JFrame gameSet = new JFrame("Game Settings");
         gameSet.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameSet.getContentPane().setBackground(new Color(51, 204, 255));
@@ -95,7 +94,7 @@ public class Menu extends JFrame {
 
         JButton langButton = new JButton("Language");
         JButton soundButton = new JButton("Sound");
-        JButton quitButton = new JButton("Quit");
+        JButton quitButton = new JButton("back");
 
         buttonPanel.add(langButton);
         buttonPanel.add(soundButton);
