@@ -1,6 +1,11 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class GameBoard extends JFrame {
     private JPanel panel;
@@ -14,9 +19,34 @@ public class GameBoard extends JFrame {
     private Player currentTurn;
     private JLabel turnLabel;
     private JButton[][] gridButtons;
+    private int shipsToPlace = 5;
+    private List<Ship> playerShips;
+    private List<Ship> computerShips;
+    private int currentShipIndex = 0;
+    private Player player1;
+    private Player player2;
 
-    public GameBoard() {
+    public GameBoard(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+        playerShips = new ArrayList<>();
+        computerShips = new ArrayList<>();
+        initializeShips();
         initializeBoard();
+    }
+
+    private void initializeShips() {
+        playerShips.add(new Ship("Aircraft Carrier", 5, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        playerShips.add(new Ship("Battleship", 4, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        playerShips.add(new Ship("Submarine", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        playerShips.add(new Ship("Cruiser", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        playerShips.add(new Ship("Destroyer", 2, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+
+        computerShips.add(new Ship("Aircraft Carrier", 5, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        computerShips.add(new Ship("Battleship", 4, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        computerShips.add(new Ship("Submarine", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        computerShips.add(new Ship("Cruiser", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        computerShips.add(new Ship("Destroyer", 2, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
     }
 
     public void initializeBoard() {
@@ -28,7 +58,7 @@ public class GameBoard extends JFrame {
         mainPanel.setBackground(new Color(51, 204, 255)); // Light blue
 
         // Top panel for the Title
-        ImageIcon titleImage = new ImageIcon("logo.png"); 
+        ImageIcon titleImage = new ImageIcon("logo.png");
         JLabel titleLabel = new JLabel(titleImage);
         mainPanel.add(titleLabel, BorderLayout.NORTH);
 
@@ -78,8 +108,8 @@ public class GameBoard extends JFrame {
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
         // Center panel for the game board grid
-        JPanel gridPanel = new JPanel(new GridLayout(11, 11, 2, 2)); 
-        gridPanel.setBackground(new Color(51, 204, 255));	// Light blue
+        JPanel gridPanel = new JPanel(new GridLayout(11, 11, 2, 2));
+        gridPanel.setBackground(new Color(51, 204, 255)); // Light blue
 
         // Empty label in the top-left corner
         gridPanel.add(new JLabel(""));
@@ -100,30 +130,82 @@ public class GameBoard extends JFrame {
             label.setHorizontalAlignment(JLabel.CENTER);
             label.setForeground(Color.BLACK); // Text color black
             gridPanel.add(label);
-            
+
             // Grid
             for (int col = 0; col < 10; col++) {
                 JButton button = new JButton();
                 button.setPreferredSize(new Dimension(40, 40)); // Size of button
                 button.setBackground(new Color(51, 204, 255)); // Light blue
                 button.setBorder(new LineBorder(Color.WHITE)); // White border
+                int finalRow = row;
+                int finalCol = col;
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (shipsToPlace > 0) {
+                            placePlayerShip(finalRow, finalCol);
+                        }
+                    }
+                });
                 gridButtons[row][col] = button;
                 gridPanel.add(button);
             }
         }
 
-        // Sample ship placement (for demonstration purposes)
-        gridButtons[2][2].setBackground(Color.GRAY); // Vertically placed ship part 1
-        gridButtons[3][2].setBackground(Color.GRAY); // Vertically placed ship part 2
-        gridButtons[4][2].setBackground(Color.GRAY); // Vertically placed ship part 3
-
-        gridButtons[7][5].setBackground(Color.GRAY); // Horizontally placed ship part 1
-        gridButtons[7][6].setBackground(Color.GRAY); // Horizontally placed ship part 2
-        gridButtons[7][7].setBackground(Color.GRAY); // Horizontally placed ship part 3
-
         mainPanel.add(gridPanel, BorderLayout.CENTER);
         add(mainPanel);
         pack();
+    }
+
+    private void placePlayerShip(int row, int col) {
+        Ship currentShip = playerShips.get(currentShipIndex);
+        // Example placement logic: just mark the button and reduce the ship count
+        if (canPlaceShip(row, col, currentShip.getSize(), true)) {
+            currentShip.placeShip(this, row, col, true); // Placing horizontally for simplicity
+            shipsToPlace--;
+            currentShipIndex++;
+            if (shipsToPlace == 0) {
+                placeComputerShips();
+                // Start the game loop
+                playTurn();
+            }
+        }
+    }
+
+    private void placeComputerShips() {
+        // Simple AI logic for placing ships randomly
+        Random random = new Random();
+        for (Ship ship : computerShips) {
+            boolean placed = false;
+            while (!placed) {
+                int startX = random.nextInt(10);
+                int startY = random.nextInt(10);
+                boolean horizontal = random.nextBoolean();
+                if (canPlaceShip(startX, startY, ship.getSize(), horizontal)) {
+                    ship.placeShip(this, startX, startY, horizontal);
+                    placed = true;
+                }
+            }
+        }
+    }
+
+    private boolean canPlaceShip(int startX, int startY, int size, boolean horizontal) {
+        if (horizontal) {
+            if (startY + size > 10) return false;
+            for (int i = 0; i < size; i++) {
+                if (gridButtons[startX][startY + i].getBackground() == Color.GRAY) {
+                    return false;
+                }
+            }
+        } else {
+            if (startX + size > 10) return false;
+            for (int i = 0; i < size; i++) {
+                if (gridButtons[startX + i][startY].getBackground() == Color.GRAY) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void updateBoard(Player player, int x, int y) {
@@ -155,5 +237,9 @@ public class GameBoard extends JFrame {
 
     public void displayTurn() {
         // Display the current turn
+    }
+
+    public void playTurn() {
+        // Logic to handle turns, this is where you can implement the game loop
     }
 }
