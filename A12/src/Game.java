@@ -10,18 +10,16 @@ public class Game {
     public Game(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        this.gameBoard = new GameBoard();
+        this.gameBoard = new GameBoard(player1, player2);
         this.volume = 50; // Default volume
         this.language = "English"; // Default language
     }
 
     public void startGame(String mode) {
         isRunning = true;
-        // Start the game with the given mode
-        if (mode.equals("PVE")) {
-            player2.placeShips(gameBoard, new Ship("Battleship", 3), 0, 0, 0, 2);
-            // Place other ships for player2
-        }
+        gameBoard.setVisible(true);
+        // Player 1 places ships, then player 2 (computer) places ships
+        // Player 1 starts placing ships manually via UI interaction
     }
 
     public void quitGame() {
@@ -77,20 +75,5 @@ public class Game {
 
     public String getInstructions() {
         return instructions;
-    }
-
-    public void playTurn() {
-        // Logic for handling turns
-        if (player1.isComputer()) {
-            player1.makeComputerMove(gameBoard);
-        } else {
-            // Wait for player1's move (handled by UI)
-        }
-
-        if (player2.isComputer()) {
-            player2.makeComputerMove(gameBoard);
-        } else {
-            // Wait for player2's move (handled by UI)
-        }
     }
 }
