@@ -11,9 +11,9 @@ public class Player {
         this.isComputer = isComputer;
     }
 
-    public void placeShips(GameBoard gameBoard, Ship ship, int startX, int startY, int endX, int endY) {
+    public void placeShips(GameBoard gameBoard, Ship ship, int startX, int startY, boolean horizontal) {
         // Logic for placing ships on the game board
-        ship.placeShip(gameBoard, startX, startY, endX, endY);
+        ship.placeShip(gameBoard, startX, startY, horizontal);
     }
 
     public void makeMove(GameBoard gameBoard, int x, int y) {
@@ -30,10 +30,6 @@ public class Player {
             y = (int) (Math.random() * 10);
         }
         makeMove(gameBoard, x, y);
-    }
-
-    public void comms(String message) {
-        // Logic for communication
     }
 
     public String getName() {
