@@ -18,8 +18,6 @@ public class Game {
     public void startGame(String mode) {
         isRunning = true;
         gameBoard.setVisible(true);
-        // Player 1 places ships, then player 2 (computer) places ships
-        // Player 1 starts placing ships manually via UI interaction
     }
 
     public void quitGame() {
