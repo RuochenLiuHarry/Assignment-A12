@@ -1,5 +1,7 @@
 import java.awt.Color;
+
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 public class Ship {
     private String name;
@@ -37,7 +39,6 @@ public class Ship {
                     gameBoard.getGridButtons()[startX + i][startY].setIcon(midHullIcon);
                 }
             }
-            gameBoard.getGridButtons()[startX + (horizontal ? 0 : i)][startY + (horizontal ? i : 0)].setBackground(Color.GRAY);
         }
     }
 
@@ -61,3 +62,4 @@ public class Ship {
         this.isSunk = isSunk;
     }
 }
+
