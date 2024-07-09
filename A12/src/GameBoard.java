@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-public class GameBoard {
+public class GameBoard extends JFrame {
     private JPanel panel;
     private JTextArea messageArea;
     private JTextField inputField;
@@ -20,9 +20,9 @@ public class GameBoard {
     }
 
     public void initializeBoard() {
-        JFrame gameBoardFrame = new JFrame("Game Board");
-        gameBoardFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameBoardFrame.setLocationRelativeTo(null);
+        setTitle("Game Board");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(51, 204, 255)); // Light blue
@@ -122,9 +122,8 @@ public class GameBoard {
         gridButtons[7][7].setBackground(Color.GRAY); // Horizontally placed ship part 3
 
         mainPanel.add(gridPanel, BorderLayout.CENTER);
-        gameBoardFrame.add(mainPanel);
-        gameBoardFrame.pack();
-        gameBoardFrame.setVisible(true);
+        add(mainPanel);
+        pack();
     }
 
     public void updateBoard(Player player, int x, int y) {

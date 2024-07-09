@@ -16,6 +16,7 @@ public class Menu extends JFrame {
     private JButton cancelButton;
     private JDialog dialog;
     private String message;
+    private Game game;
 
     public Menu() {
         menu();
@@ -59,13 +60,17 @@ public class Menu extends JFrame {
     }
 
     private void startPVE() {
+        if (game != null) {
+            game.getGameBoard().dispose();
+        }
+
         Player player1 = new Player("Player 1", false);
         Player player2 = new Player("Computer", true);
-        Game game = new Game(player1, player2);
+        game = new Game(player1, player2);
         game.startGame("PVE");
 
         // Show game board
-        game.getGameBoard().initializeBoard();
+        game.getGameBoard().setVisible(true);
         // Play turns in a loop or handle turn switching
     }
 
