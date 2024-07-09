@@ -32,6 +32,10 @@ public class Player {
         makeMove(gameBoard, x, y);
     }
 
+    public void comms(String message) {
+        // Logic for communication
+    }
+
     public String getName() {
         return name;
     }
@@ -48,3 +52,4 @@ public class Player {
         return isComputer;
     }
 }
+
