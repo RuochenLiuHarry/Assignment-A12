@@ -13,7 +13,7 @@ public class Player {
 
     public void placeShips(GameBoard gameBoard, Ship ship, int startX, int startY, boolean horizontal) {
         // Logic for placing ships on the game board
-        ship.placeShip(gameBoard, startX, startY, horizontal);
+        ship.placeShip(gameBoard, startX, startY, horizontal, false);
     }
 
     public void makeMove(GameBoard gameBoard, int x, int y) {
@@ -25,7 +25,7 @@ public class Player {
         // Simple AI logic for making a move
         int x = (int) (Math.random() * 10);
         int y = (int) (Math.random() * 10);
-        while (gameBoard.getGridButtons()[x][y].getBackground() == Color.RED || gameBoard.getGridButtons()[x][y].getBackground() == Color.WHITE) {
+        while (gameBoard.getGridButtons()[x][y].getIcon() != null) {
             x = (int) (Math.random() * 10);
             y = (int) (Math.random() * 10);
         }
