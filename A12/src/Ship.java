@@ -20,23 +20,24 @@ public class Ship {
         this.sternIcon = sternIcon;
     }
 
-    public void placeShip(GameBoard gameBoard, int startX, int startY, boolean horizontal) {
+    public void placeShip(GameBoard gameBoard, int startX, int startY, boolean horizontal, boolean isComputer) {
+        JButton[][] gridButtons = isComputer ? gameBoard.getComputerGridButtons() : gameBoard.getGridButtons();
         for (int i = 0; i < size; i++) {
             if (horizontal) {
                 if (i == 0) {
-                    gameBoard.getGridButtons()[startX][startY + i].setIcon(bowIcon);
+                    gridButtons[startX][startY + i].setIcon(bowIcon);
                 } else if (i == size - 1) {
-                    gameBoard.getGridButtons()[startX][startY + i].setIcon(sternIcon);
+                    gridButtons[startX][startY + i].setIcon(sternIcon);
                 } else {
-                    gameBoard.getGridButtons()[startX][startY + i].setIcon(midHullIcon);
+                    gridButtons[startX][startY + i].setIcon(midHullIcon);
                 }
             } else {
                 if (i == 0) {
-                    gameBoard.getGridButtons()[startX + i][startY].setIcon(bowIcon);
+                    gridButtons[startX + i][startY].setIcon(bowIcon);
                 } else if (i == size - 1) {
-                    gameBoard.getGridButtons()[startX + i][startY].setIcon(sternIcon);
+                    gridButtons[startX + i][startY].setIcon(sternIcon);
                 } else {
-                    gameBoard.getGridButtons()[startX + i][startY].setIcon(midHullIcon);
+                    gridButtons[startX + i][startY].setIcon(midHullIcon);
                 }
             }
         }
