@@ -260,12 +260,29 @@ public class GameBoard extends JFrame {
 
     public void updateBoard(Player player, int x, int y) {
         // Logic to update the game board with the player's move
-        if (computerGridButtons[x][y].getIcon() != null) {
-            gridButtons[x][y].setIcon(hitIcon); // Hit
-            computerGridButtons[x][y].setIcon(computerGridButtons[x][y].getIcon()); // Display the computer's ship part
+        if (player == player1) {
+            if (gridButtons[x][y].getIcon() == hitIcon || gridButtons[x][y].getIcon() == missIcon) {
+                JOptionPane.showMessageDialog(this, "This cell was already hit. Try again.");
+                return;
+            }
+            if (computerGridButtons[x][y].getIcon() != null) {
+                gridButtons[x][y].setIcon(hitIcon); // Hit
+                computerGridButtons[x][y].setIcon(hitIcon); // Mark the computer's grid as well
+            } else {
+                gridButtons[x][y].setIcon(missIcon); // Miss
+                computerGridButtons[x][y].setIcon(missIcon); // Mark the computer's grid as well
+            }
         } else {
-            gridButtons[x][y].setIcon(missIcon); // Miss
-            computerGridButtons[x][y].setIcon(missIcon); // Mark the computer's grid as well
+            if (gridButtons[x][y].getIcon() == hitIcon || gridButtons[x][y].getIcon() == missIcon) {
+                // Computer should not hit an already hit cell
+                player2.makeComputerMove(this);
+            } else if (gridButtons[x][y].getIcon() != null) {
+                gridButtons[x][y].setIcon(hitIcon); // Hit
+                computerGridButtons[x][y].setIcon(hitIcon); // Mark the computer's grid as well
+            } else {
+                gridButtons[x][y].setIcon(missIcon); // Miss
+                computerGridButtons[x][y].setIcon(missIcon); // Mark the computer's grid as well
+            }
         }
     }
 
@@ -291,6 +308,14 @@ public class GameBoard extends JFrame {
 
     public JButton[][] getComputerGridButtons() {
         return computerGridButtons;
+    }
+
+    public ImageIcon getHitIcon() {
+        return hitIcon;
+    }
+
+    public ImageIcon getMissIcon() {
+        return missIcon;
     }
 
     public void sendMessage(String message) {
