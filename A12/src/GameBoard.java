@@ -26,12 +26,17 @@ public class GameBoard extends JFrame {
     private Player player1;
     private Player player2;
     private boolean placingShips = true;
+    private boolean gameStarted = false;
+    private ImageIcon hitIcon;
+    private ImageIcon missIcon;
 
     public GameBoard(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
         playerShips = new ArrayList<>();
         computerShips = new ArrayList<>();
+        hitIcon = new ImageIcon("hit.png");
+        missIcon = new ImageIcon("miss.png");
         initializeShips();
         initializeBoard();
     }
@@ -101,7 +106,14 @@ public class GameBoard extends JFrame {
         JButton surrenderButton = new JButton("Surrender");
         JButton settingButton = new JButton("Setting");
         JButton swapButton = new JButton("Swap");
-        swapButton.addActionListener(e -> swapBoards());
+        swapButton.addActionListener(e -> {
+            if (shipsToPlace == 0) {
+                swapBoards();
+                gameStarted = true;
+            } else {
+                JOptionPane.showMessageDialog(this, "Place all ships before starting the game.");
+            }
+        });
         JButton quitButton = new JButton("Quit");
         bottomPanel.add(surrenderButton);
         bottomPanel.add(settingButton);
@@ -145,12 +157,16 @@ public class GameBoard extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         if (placingShips) {
                             placePlayerShip(finalRow, finalCol);
-                        } else {
+                        } else if (gameStarted) {
                             makeMove(finalRow, finalCol);
                         }
                     }
                 });
                 gridButtons[row][col] = button;
+                computerGridButtons[row][col] = new JButton();
+                computerGridButtons[row][col].setPreferredSize(new Dimension(40, 40)); // Size of button
+                computerGridButtons[row][col].setBackground(new Color(51, 204, 255)); // Light blue
+                computerGridButtons[row][col].setBorder(new LineBorder(Color.WHITE)); // White border
                 gridPanel.add(button);
             }
         }
@@ -168,14 +184,12 @@ public class GameBoard extends JFrame {
         boolean horizontal = isShipHorizontal(currentShipIndex, false);
         // Example placement logic: just mark the button and reduce the ship count
         if (canPlaceShip(row, col, currentShip.getSize(), horizontal)) {
-            currentShip.placeShip(this, row, col, horizontal);
+            currentShip.placeShip(this, row, col, horizontal, false);
             shipsToPlace--;
             currentShipIndex++;
             if (shipsToPlace == 0) {
                 placeComputerShips();
                 placingShips = false;
-                // Start the game loop
-                playTurn();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Ships cannot overlap each other. Try again.");
@@ -193,7 +207,7 @@ public class GameBoard extends JFrame {
                 int startX = random.nextInt(10);
                 int startY = random.nextInt(10);
                 if (canPlaceShip(startX, startY, ship.getSize(), horizontal)) {
-                    ship.placeShip(this, startX, startY, horizontal);
+                    ship.placeShip(this, startX, startY, horizontal, true);
                     placed = true;
                 }
             }
@@ -246,19 +260,29 @@ public class GameBoard extends JFrame {
 
     public void updateBoard(Player player, int x, int y) {
         // Logic to update the game board with the player's move
-        if (gridButtons[x][y].getBackground() == Color.GRAY) {
-            gridButtons[x][y].setBackground(Color.RED); // Hit
+        if (computerGridButtons[x][y].getIcon() != null) {
+            gridButtons[x][y].setIcon(hitIcon); // Hit
+            computerGridButtons[x][y].setIcon(computerGridButtons[x][y].getIcon()); // Display the computer's ship part
         } else {
-            gridButtons[x][y].setBackground(Color.WHITE); // Miss
+            gridButtons[x][y].setIcon(missIcon); // Miss
+            computerGridButtons[x][y].setIcon(missIcon); // Mark the computer's grid as well
         }
     }
 
     public void makeMove(int row, int col) {
         // Logic to make a move
+        updateBoard(player1, row, col);
+        player2.makeComputerMove(this);
     }
 
     private void swapBoards() {
         // Logic to swap boards and start the game
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                gridButtons[row][col].setIcon(null); // Hide Player 1's ships
+            }
+        }
+        gameStarted = true;
     }
 
     public JButton[][] getGridButtons() {
@@ -291,4 +315,5 @@ public class GameBoard extends JFrame {
         // Logic to handle turns, this is where you can implement the game loop
     }
 }
+
 
