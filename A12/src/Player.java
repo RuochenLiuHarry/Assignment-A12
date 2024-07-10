@@ -1,5 +1,7 @@
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
+
 public class Player {
     private String name;
     private int score;
@@ -25,7 +27,10 @@ public class Player {
         // Simple AI logic for making a move
         int x = (int) (Math.random() * 10);
         int y = (int) (Math.random() * 10);
-        while (gameBoard.getGridButtons()[x][y].getIcon() != null) {
+        ImageIcon hitIcon = gameBoard.getHitIcon();
+        ImageIcon missIcon = gameBoard.getMissIcon();
+        
+        while (gameBoard.getGridButtons()[x][y].getIcon() == hitIcon || gameBoard.getGridButtons()[x][y].getIcon() == missIcon) {
             x = (int) (Math.random() * 10);
             y = (int) (Math.random() * 10);
         }
@@ -52,4 +57,3 @@ public class Player {
         return isComputer;
     }
 }
-
