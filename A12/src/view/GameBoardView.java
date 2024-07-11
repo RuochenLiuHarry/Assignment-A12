@@ -122,4 +122,21 @@ public class GameBoardView extends JFrame {
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
+
+    public void showPlayerBoard() {
+        setBoardVisibility(true);
+    }
+
+    public void showComputerBoard() {
+        setBoardVisibility(false);
+    }
+
+    private void setBoardVisibility(boolean showPlayerBoard) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                gridButtons[i][j].setVisible(showPlayerBoard);
+                computerGridButtons[i][j].setVisible(!showPlayerBoard);
+            }
+        }
+    }
 }
