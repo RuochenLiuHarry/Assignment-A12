@@ -9,12 +9,14 @@ public class Ship {
     private int size;
     private boolean isSunk;
     private ImageIcon[] icons;
+    private boolean horizontal;
 
     public Ship(String name, int size, ImageIcon bow, ImageIcon middle, ImageIcon stern) {
         this.name = name;
         this.size = size;
         this.isSunk = false;
         this.icons = new ImageIcon[]{bow, middle, stern};
+        this.horizontal = true; // Default orientation
     }
 
     public String getName() { return name; }
@@ -22,8 +24,11 @@ public class Ship {
     public boolean isSunk() { return isSunk; }
     public void setSunk(boolean isSunk) { this.isSunk = isSunk; }
     public ImageIcon[] getIcons() { return icons; }
+    public boolean isHorizontal() { return horizontal; }
+    public void setHorizontal(boolean horizontal) { this.horizontal = horizontal; }
 
     public void placeShip(GameBoardView view, int startX, int startY, boolean horizontal, boolean isComputer) {
+        this.horizontal = horizontal; // Set the orientation
         JButton[][] buttons = isComputer ? view.getComputerGridButtons() : view.getGridButtons();
         for (int i = 0; i < size; i++) {
             if (i == 0) {
