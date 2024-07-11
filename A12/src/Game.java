@@ -3,7 +3,7 @@ public class Game {
     private Player player2;
     private GameBoard gameBoard;
     private boolean isRunning;
-    private int volume;
+    private int volume; 	
     private String language;
     private String instructions;
 
