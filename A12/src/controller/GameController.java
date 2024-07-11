@@ -156,12 +156,7 @@ public class GameController {
         boolean isHit = game.makeMove(x, y);
         updateView(x, y, isHit);
 
-        if (!isHit) {
-            view.showMessage("Miss! Click 'Swap' to end your turn.");
-        }
-
         if (game.getCurrentTurn().isComputer()) {
-            view.showMessage("Computer's turn.");
             makeComputerMove();
         }
     }
@@ -175,23 +170,13 @@ public class GameController {
         } while (!game.makeMove(x, y));
 
         updateView(x, y, true);
-
-        view.showMessage("Player 1's turn. Click 'Swap' to switch to your board.");
     }
 
     private void updateView(int x, int y, boolean isHit) {
-        if (game.getCurrentTurn() == game.getPlayer1()) {
-            if (isHit) {
-                view.getComputerGridButtons()[x][y].setIcon(new ImageIcon("hit.png"));
-            } else {
-                view.getComputerGridButtons()[x][y].setIcon(new ImageIcon("miss.png"));
-            }
+        if (isHit) {
+            view.getGridButtons()[x][y].setIcon(new ImageIcon("hit.png"));
         } else {
-            if (isHit) {
-                view.getGridButtons()[x][y].setIcon(new ImageIcon("hit.png"));
-            } else {
-                view.getGridButtons()[x][y].setIcon(new ImageIcon("miss.png"));
-            }
+            view.getGridButtons()[x][y].setIcon(new ImageIcon("miss.png"));
         }
         view.updateTurnLabel(game.getCurrentTurn().getName());
         view.updateScores(game.getPlayer1().getScore(), game.getPlayer2().getScore());
@@ -208,17 +193,13 @@ public class GameController {
     }
 
     private void swapBoards() {
-        if (placingShips) {
+        if (currentShipIndex < game.getPlayer1Ships().size()) {
             view.showMessage("Place all ships before starting the game.");
             return;
         }
-        if (game.getCurrentTurn() == game.getPlayer1()) {
-            view.showComputerBoard();
-            view.showMessage("Player 1's turn.");
-        } else {
-            view.showPlayerBoard();
-            view.showMessage("Computer's turn.");
-        }
+        game.placeComputerShips();
+        game.startGame();
+        view.showMessage("Game started! It's Player 1's turn.");
     }
 
     private void quitGame() {
