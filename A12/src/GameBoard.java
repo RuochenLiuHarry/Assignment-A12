@@ -107,7 +107,9 @@ public class GameBoard extends JFrame {
         JButton settingButton = new JButton("Setting");
         JButton swapButton = new JButton("Swap");
         swapButton.addActionListener(e -> {
-            if (shipsToPlace == 0) {
+            if (gameStarted) {
+                swapBoards();
+            } else if (shipsToPlace == 0) {
                 swapBoards();
                 gameStarted = true;
             } else {
@@ -157,7 +159,7 @@ public class GameBoard extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         if (placingShips) {
                             placePlayerShip(finalRow, finalCol);
-                        } else if (gameStarted) {
+                        } else if (gameStarted && currentTurn == player1) {
                             makeMove(finalRow, finalCol);
                         }
                     }
@@ -268,20 +270,25 @@ public class GameBoard extends JFrame {
             if (computerGridButtons[x][y].getIcon() != null) {
                 gridButtons[x][y].setIcon(hitIcon); // Hit
                 computerGridButtons[x][y].setIcon(hitIcon); // Mark the computer's grid as well
+                currentTurn = player1; // Player 1 can continue hitting
             } else {
                 gridButtons[x][y].setIcon(missIcon); // Miss
                 computerGridButtons[x][y].setIcon(missIcon); // Mark the computer's grid as well
+                JOptionPane.showMessageDialog(this, "Miss! Click 'Swap' to end your turn.");
+                currentTurn = player2; // Switch to computer's turn
             }
         } else {
             if (gridButtons[x][y].getIcon() == hitIcon || gridButtons[x][y].getIcon() == missIcon) {
-                // Computer should not hit an already hit cell
-                player2.makeComputerMove(this);
+                player2.makeComputerMove(this); // Computer should not hit an already hit cell
             } else if (gridButtons[x][y].getIcon() != null) {
                 gridButtons[x][y].setIcon(hitIcon); // Hit
                 computerGridButtons[x][y].setIcon(hitIcon); // Mark the computer's grid as well
+                currentTurn = player2; // Computer can continue hitting
             } else {
                 gridButtons[x][y].setIcon(missIcon); // Miss
                 computerGridButtons[x][y].setIcon(missIcon); // Mark the computer's grid as well
+                currentTurn = player1; // Switch to player's turn
+                swapBoards(); // Automatically swap to player's board
             }
         }
     }
@@ -289,17 +296,31 @@ public class GameBoard extends JFrame {
     public void makeMove(int row, int col) {
         // Logic to make a move
         updateBoard(player1, row, col);
-        player2.makeComputerMove(this);
     }
 
     private void swapBoards() {
-        // Logic to swap boards and start the game
-        for (int row = 0; row < 10; row++) {
-            for (int col = 0; col < 10; col++) {
-                gridButtons[row][col].setIcon(null); // Hide Player 1's ships
+        if (currentTurn == player1) {
+            // Hide Player 1's ships and show computer's board
+            for (int row = 0; row < 10; row++) {
+                for (int col = 0; col < 10; col++) {
+                    if (gridButtons[row][col].getIcon() != hitIcon && gridButtons[row][col].getIcon() != missIcon) {
+                        gridButtons[row][col].setIcon(null); // Hide Player 1's ships
+                    }
+                }
             }
+            currentTurn = player2;
+            player2.makeComputerMove(this); // Computer takes its turn
+        } else {
+            // Show Player 1's ships and hide computer's board
+            for (int row = 0; row < 10; row++) {
+                for (int col = 0; col < 10; col++) {
+                    if (computerGridButtons[row][col].getIcon() == null) {
+                        gridButtons[row][col].setIcon(null); // Show Player 1's ships
+                    }
+                }
+            }
+            currentTurn = player1;
         }
-        gameStarted = true;
     }
 
     public JButton[][] getGridButtons() {
