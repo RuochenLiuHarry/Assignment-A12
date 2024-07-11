@@ -86,6 +86,7 @@ public class Game {
                     board[x + i][y] = true;
                 }
             }
+            ship.setHorizontal(isHorizontal); // Set the ship orientation
         } else {
             throw new Exception("Ships cannot overlap. Try again.");
         }
@@ -108,27 +109,27 @@ public class Game {
 
     public void placeComputerShips() {
         Random random = new Random();
-        for (Ship ship : player2Ships) {
+        for (int i = 0; i < player1Ships.size(); i++) {
+            Ship player1Ship = player1Ships.get(i);
+            Ship player2Ship = player2Ships.get(i);
             boolean placed = false;
-            boolean horizontal = isShipHorizontal(ship.getSize());
+            boolean horizontal = player1Ship.isHorizontal();
             while (!placed) {
                 int startX = random.nextInt(10);
                 int startY = random.nextInt(10);
-                try {
-                    placeShip(player2, ship, startX, startY, horizontal);
+                if (canPlaceShip(player2Board, player2Ship.getSize(), startX, startY, horizontal)) {
+                    try {
+                        placeShip(player2, player2Ship, startX, startY, horizontal);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     placed = true;
-                } catch (Exception e) {
-                    // Retry placing ship
                 }
             }
         }
     }
 
-    private boolean isShipHorizontal(int shipSize) {
-        return shipSize % 2 == 0;
-    }
-
-    private void switchTurn() {
+    public void switchTurn() {
         currentTurn = (currentTurn == player1) ? player2 : player1;
     }
 
