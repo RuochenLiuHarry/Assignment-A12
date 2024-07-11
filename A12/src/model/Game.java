@@ -1,10 +1,9 @@
 package model;
 
+import javax.swing.ImageIcon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
 
 public class Game {
     private Player player1;
@@ -42,7 +41,11 @@ public class Game {
         player1Ships.add(new Ship("Cruiser", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
         player1Ships.add(new Ship("Destroyer", 2, new ImageIcon("bow_west.png"), new ImageIcon("midhull_horiz.png"), new ImageIcon("bow_east.png")));
 
-        player2Ships.addAll(player1Ships);
+        player2Ships.add(new Ship("Aircraft Carrier", 5, new ImageIcon("bow_west.png"), new ImageIcon("midhull_horiz.png"), new ImageIcon("bow_east.png")));
+        player2Ships.add(new Ship("Battleship", 4, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        player2Ships.add(new Ship("Submarine", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        player2Ships.add(new Ship("Cruiser", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        player2Ships.add(new Ship("Destroyer", 2, new ImageIcon("bow_west.png"), new ImageIcon("midhull_horiz.png"), new ImageIcon("bow_east.png")));
     }
 
     public void startGame() {
@@ -150,4 +153,5 @@ public class Game {
     public boolean[][] getPlayer1Hits() { return player1Hits; }
     public boolean[][] getPlayer2Hits() { return player2Hits; }
     public List<Ship> getPlayer1Ships() { return player1Ships; }
+    public List<Ship> getPlayer2Ships() { return player2Ships; }
 }
