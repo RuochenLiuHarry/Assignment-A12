@@ -31,12 +31,20 @@ public class GameController {
             for (int col = 0; col < 10; col++) {
                 int finalRow = row;
                 int finalCol = col;
+
                 view.getGridButtons()[row][col].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (placingShips) {
                             placePlayerShip(finalRow, finalCol);
-                        } else {
+                        }
+                    }
+                });
+
+                view.getComputerGridButtons()[row][col].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (!placingShips && game.getCurrentTurn() == game.getPlayer1()) {
                             makeMove(finalRow, finalCol);
                         }
                     }
@@ -90,16 +98,8 @@ public class GameController {
     }
 
     private boolean isShipHorizontal(int shipIndex, boolean isComputer) {
-        // Define the orientation of the ships based on index and player/computer
         if (isComputer) {
-            switch (shipIndex) {
-                case 0: return true; // Aircraft Carrier
-                case 1: return false; // Battleship
-                case 2: return true; // Submarine
-                case 3: return false; // Cruiser
-                case 4: return true; // Destroyer
-                default: return true;
-            }
+            return game.getPlayer1Ships().get(shipIndex).isHorizontal();
         } else {
             switch (shipIndex) {
                 case 0: return true; // Aircraft Carrier
@@ -113,14 +113,17 @@ public class GameController {
     }
 
     private void updateShipView(int x, int y, Ship ship, boolean horizontal, boolean isComputer) {
-        JButton[][] buttons = isComputer ? view.getComputerGridButtons() : view.getGridButtons();
+        if (isComputer) {
+            return; // Do not display ship icons on the computer board
+        }
+
+        JButton[][] buttons = view.getGridButtons();
         ImageIcon[] icons = ship.getIcons();
         for (int i = 0; i < ship.getSize(); i++) {
-            if (i == 0) {
-                buttons[x][y].setIcon(horizontal ? icons[0] : icons[0]);
-            } else if (i == ship.getSize() - 1) {
+            buttons[x][y].setIcon(horizontal ? icons[0] : icons[0]);
+            if (i == ship.getSize() - 1) {
                 buttons[x][y].setIcon(horizontal ? icons[2] : icons[2]);
-            } else {
+            } else if (i != 0) {
                 buttons[x][y].setIcon(horizontal ? icons[1] : icons[1]);
             }
             if (horizontal) {
@@ -136,14 +139,41 @@ public class GameController {
         for (int i = 0; i < game.getPlayer2Ships().size(); i++) {
             Ship ship = game.getPlayer2Ships().get(i);
             boolean placed = false;
-            boolean horizontal = isShipHorizontal(i, true);
+            boolean horizontal = game.getPlayer1Ships().get(i).isHorizontal();
             while (!placed) {
                 int startX = random.nextInt(10);
                 int startY = random.nextInt(10);
-                if (canPlaceShip(startX, startY, ship.getSize(), horizontal)) {
+                if (canPlaceComputerShip(startX, startY, ship.getSize(), horizontal)) {
                     ship.placeShip(view, startX, startY, horizontal, true);
+                    markBoardWithShip(game.getPlayer2Board(), startX, startY, ship.getSize(), horizontal);
                     placed = true;
                 }
+            }
+        }
+    }
+
+    private boolean canPlaceComputerShip(int startX, int startY, int size, boolean horizontal) {
+        boolean[][] board = game.getPlayer2Board();
+        if (horizontal) {
+            if (startY + size > 10) return false;
+            for (int i = 0; i < size; i++) {
+                if (board[startX][startY + i]) return false;
+            }
+        } else {
+            if (startX + size > 10) return false;
+            for (int i = 0; i < size; i++) {
+                if (board[startX + i][startY]) return false;
+            }
+        }
+        return true;
+    }
+
+    private void markBoardWithShip(boolean[][] board, int startX, int startY, int size, boolean horizontal) {
+        for (int i = 0; i < size; i++) {
+            if (horizontal) {
+                board[startX][startY + i] = true;
+            } else {
+                board[startX + i][startY] = true;
             }
         }
     }
@@ -156,27 +186,44 @@ public class GameController {
         boolean isHit = game.makeMove(x, y);
         updateView(x, y, isHit);
 
-        if (game.getCurrentTurn().isComputer()) {
-            makeComputerMove();
+        if (!isHit) {
+            view.showMessage("Miss! Click 'OK' to end your turn.");
+            game.switchTurn();
+            makeComputerMove(); // Computer makes a move after player misses
         }
     }
 
     private void makeComputerMove() {
         // Simple AI: random moves
         int x, y;
+        boolean isHit;
         do {
             x = (int) (Math.random() * 10);
             y = (int) (Math.random() * 10);
-        } while (!game.makeMove(x, y));
+            isHit = game.makeMove(x, y);
+        } while (isHit);
 
-        updateView(x, y, true);
+        updateView(x, y, isHit);
+
+        if (!isHit) {
+            game.switchTurn();
+        }
     }
 
     private void updateView(int x, int y, boolean isHit) {
-        if (isHit) {
-            view.getGridButtons()[x][y].setIcon(new ImageIcon("hit.png"));
-        } else {
-            view.getGridButtons()[x][y].setIcon(new ImageIcon("miss.png"));
+        if (game.getCurrentTurn() == game.getPlayer1()) {
+            if (isHit) {
+                view.getComputerGridButtons()[x][y].setIcon(new ImageIcon("hit.png"));
+            } else {
+                view.getComputerGridButtons()[x][y].setIcon(new ImageIcon("miss.png"));
+            }
+        } 
+        if (game.getCurrentTurn() == game.getPlayer2()) {
+            if (isHit) {
+                view.getGridButtons()[x][y].setIcon(new ImageIcon("hit.png"));
+            } else {
+                view.getGridButtons()[x][y].setIcon(new ImageIcon("miss.png"));
+            }
         }
         view.updateTurnLabel(game.getCurrentTurn().getName());
         view.updateScores(game.getPlayer1().getScore(), game.getPlayer2().getScore());
@@ -193,13 +240,11 @@ public class GameController {
     }
 
     private void swapBoards() {
-        if (currentShipIndex < game.getPlayer1Ships().size()) {
+        if (placingShips) {
             view.showMessage("Place all ships before starting the game.");
             return;
         }
-        game.placeComputerShips();
-        game.startGame();
-        view.showMessage("Game started! It's Player 1's turn.");
+        view.toggleBoard();
     }
 
     private void quitGame() {
