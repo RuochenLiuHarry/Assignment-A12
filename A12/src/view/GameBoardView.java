@@ -5,6 +5,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class GameBoardView extends JFrame {
+    private JPanel gridPanel;
     private JButton[][] gridButtons;
     private JButton[][] computerGridButtons;
     private JLabel turnLabel;
@@ -14,6 +15,7 @@ public class GameBoardView extends JFrame {
     private JButton quitButton;
     private JLabel player1ScoreLabel;
     private JLabel player2ScoreLabel;
+    private boolean showingPlayerBoard;
 
     public GameBoardView() {
         initializeUI();
@@ -30,7 +32,7 @@ public class GameBoardView extends JFrame {
         add(logoLabel, BorderLayout.NORTH);
 
         // Center panel for game board
-        JPanel gridPanel = new JPanel(new GridLayout(11, 11, 2, 2));
+        gridPanel = new JPanel(new GridLayout(11, 11, 2, 2));
         gridPanel.setBackground(new Color(51, 204, 255));
 
         gridButtons = new JButton[10][10];
@@ -101,6 +103,9 @@ public class GameBoardView extends JFrame {
 
         pack();
         setLocationRelativeTo(null);
+
+        showingPlayerBoard = true;
+        showPlayerBoard();  // Initially show player board
     }
 
     public JButton[][] getGridButtons() { return gridButtons; }
@@ -124,19 +129,61 @@ public class GameBoardView extends JFrame {
     }
 
     public void showPlayerBoard() {
-        setBoardVisibility(true);
+        remove(gridPanel);
+        gridPanel = new JPanel(new GridLayout(11, 11, 2, 2));
+        gridPanel.setBackground(new Color(51, 204, 255));
+
+        gridPanel.add(new JLabel("")); // Empty top-left corner
+        String[] colLabel = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+        for (String label : colLabel) {
+            gridPanel.add(new JLabel(label, SwingConstants.CENTER));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            gridPanel.add(new JLabel(String.valueOf(i + 1), SwingConstants.CENTER));
+            for (int j = 0; j < 10; j++) {
+                gridPanel.add(gridButtons[i][j]);
+            }
+        }
+
+        add(gridPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
 
     public void showComputerBoard() {
-        setBoardVisibility(false);
-    }
+        remove(gridPanel);
+        gridPanel = new JPanel(new GridLayout(11, 11, 2, 2));
+        gridPanel.setBackground(new Color(51, 204, 255));
 
-    private void setBoardVisibility(boolean showPlayerBoard) {
+        gridPanel.add(new JLabel("")); // Empty top-left corner
+        String[] colLabel = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+        for (String label : colLabel) {
+            gridPanel.add(new JLabel(label, SwingConstants.CENTER));
+        }
+
         for (int i = 0; i < 10; i++) {
+            gridPanel.add(new JLabel(String.valueOf(i + 1), SwingConstants.CENTER));
             for (int j = 0; j < 10; j++) {
-                gridButtons[i][j].setVisible(showPlayerBoard);
-                computerGridButtons[i][j].setVisible(!showPlayerBoard);
+                gridPanel.add(computerGridButtons[i][j]);
             }
         }
+
+        add(gridPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    public void toggleBoard() {
+        if (showingPlayerBoard) {
+            showComputerBoard();
+        } else {
+            showPlayerBoard();
+        }
+        showingPlayerBoard = !showingPlayerBoard;
+    }
+
+    public boolean isShowingPlayerBoard() {
+        return showingPlayerBoard;
     }
 }
