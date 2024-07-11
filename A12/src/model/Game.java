@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+
 public class Game {
     private Player player1;
     private Player player2;
@@ -34,11 +36,11 @@ public class Game {
     }
 
     private void initializeShips() {
-        player1Ships.add(new Ship("Aircraft Carrier", 5));
-        player1Ships.add(new Ship("Battleship", 4));
-        player1Ships.add(new Ship("Submarine", 3));
-        player1Ships.add(new Ship("Cruiser", 3));
-        player1Ships.add(new Ship("Destroyer", 2));
+        player1Ships.add(new Ship("Aircraft Carrier", 5, new ImageIcon("bow_west.png"), new ImageIcon("midhull_horiz.png"), new ImageIcon("bow_east.png")));
+        player1Ships.add(new Ship("Battleship", 4, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        player1Ships.add(new Ship("Submarine", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        player1Ships.add(new Ship("Cruiser", 3, new ImageIcon("bow_north.png"), new ImageIcon("midhull_vert.png"), new ImageIcon("bow_south.png")));
+        player1Ships.add(new Ship("Destroyer", 2, new ImageIcon("bow_west.png"), new ImageIcon("midhull_horiz.png"), new ImageIcon("bow_east.png")));
 
         player2Ships.addAll(player1Ships);
     }
@@ -70,7 +72,7 @@ public class Game {
         return isHit;
     }
 
-    public void placeShip(Player player, Ship ship, int x, int y, boolean isHorizontal) {
+    public void placeShip(Player player, Ship ship, int x, int y, boolean isHorizontal) throws Exception {
         boolean[][] board = (player == player1) ? player1Board : player2Board;
 
         if (canPlaceShip(board, ship.getSize(), x, y, isHorizontal)) {
@@ -81,6 +83,8 @@ public class Game {
                     board[x + i][y] = true;
                 }
             }
+        } else {
+            throw new Exception("Ships cannot overlap. Try again.");
         }
     }
 
@@ -103,16 +107,22 @@ public class Game {
         Random random = new Random();
         for (Ship ship : player2Ships) {
             boolean placed = false;
+            boolean horizontal = isShipHorizontal(ship.getSize());
             while (!placed) {
-                int x = random.nextInt(10);
-                int y = random.nextInt(10);
-                boolean isHorizontal = random.nextBoolean();
-                if (canPlaceShip(player2Board, ship.getSize(), x, y, isHorizontal)) {
-                    placeShip(player2, ship, x, y, isHorizontal);
+                int startX = random.nextInt(10);
+                int startY = random.nextInt(10);
+                try {
+                    placeShip(player2, ship, startX, startY, horizontal);
                     placed = true;
+                } catch (Exception e) {
+                    // Retry placing ship
                 }
             }
         }
+    }
+
+    private boolean isShipHorizontal(int shipSize) {
+        return shipSize % 2 == 0;
     }
 
     private void switchTurn() {
@@ -139,4 +149,5 @@ public class Game {
     public boolean[][] getPlayer2Board() { return player2Board; }
     public boolean[][] getPlayer1Hits() { return player1Hits; }
     public boolean[][] getPlayer2Hits() { return player2Hits; }
+    public List<Ship> getPlayer1Ships() { return player1Ships; }
 }

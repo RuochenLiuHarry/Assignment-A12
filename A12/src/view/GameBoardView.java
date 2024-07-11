@@ -6,6 +6,7 @@ import java.awt.*;
 
 public class GameBoardView extends JFrame {
     private JButton[][] gridButtons;
+    private JButton[][] computerGridButtons;
     private JLabel turnLabel;
     private JButton surrenderButton;
     private JButton settingButton;
@@ -33,6 +34,7 @@ public class GameBoardView extends JFrame {
         gridPanel.setBackground(new Color(51, 204, 255));
 
         gridButtons = new JButton[10][10];
+        computerGridButtons = new JButton[10][10];
         String[] colLabel = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
 
         gridPanel.add(new JLabel("")); // Empty top-left corner
@@ -48,6 +50,11 @@ public class GameBoardView extends JFrame {
                 gridButtons[i][j].setBackground(new Color(51, 204, 255));
                 gridButtons[i][j].setBorder(new LineBorder(Color.WHITE));
                 gridPanel.add(gridButtons[i][j]);
+
+                computerGridButtons[i][j] = new JButton();
+                computerGridButtons[i][j].setPreferredSize(new Dimension(40, 40));
+                computerGridButtons[i][j].setBackground(new Color(51, 204, 255));
+                computerGridButtons[i][j].setBorder(new LineBorder(Color.WHITE));
             }
         }
 
@@ -97,6 +104,7 @@ public class GameBoardView extends JFrame {
     }
 
     public JButton[][] getGridButtons() { return gridButtons; }
+    public JButton[][] getComputerGridButtons() { return computerGridButtons; }
     public JButton getSurrenderButton() { return surrenderButton; }
     public JButton getSettingButton() { return settingButton; }
     public JButton getSwapButton() { return swapButton; }
